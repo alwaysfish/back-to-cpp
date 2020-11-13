@@ -16,6 +16,11 @@ int main()
 {
     ExchangeBoard board;
     unique_lock<mutex> ul_cout(g_mutex_cout, defer_lock);
+    vector<Conversion> conversions;
+
+    conversions.push_back(Conversion("JPY", "EUR", 100000));
+    conversions.push_back(Conversion("GBP", "EUR", 100));
+    conversions.push_back(Conversion("CAD", "CAD", 200));
     
     if (!board.load_rates("./../../datasets/exchange_rates.csv"))
     {
@@ -33,12 +38,21 @@ int main()
 
     run_threads = false;
 
-    board.convert("JPY", "EUR", 100000);
-    board.convert("GBP", "EUR", 100);
-    board.convert("CAD", "CAD", 200);
-
     th_gen1.join();
     th_gen2.join();
     th_gen3.join();
     th_update.join();
+
+    for (auto &c : conversions)
+    {
+        if (board.convert(c))
+        {
+            cout << c.amount << " " << c.from << " -> " << c.converted_amount << " " << c.to <<
+                " @ " << c.rate << " " << c.pair << endl;
+        }
+        else
+        {
+            cout << c.from << " -> " << c.to << " cannot be converted" << endl;
+        }
+    }
 }

@@ -24,8 +24,9 @@ void update_board(std::atomic<bool> &keep_running, ExchangeBoard &board)
             board.update_rate(qu.pair, qu.last);
 
             ul_cout.lock();
-            cout << "BoardUpdater thread: Last quote for " << qu.pair << " " 
-                << board.get_rate(qu.pair)->get_last() << endl;
+            cout << "BoardUpdater thread: Updated " << qu.pair <<
+                "\tBid: " << board.get_rate(qu.pair)->get_bid() <<
+                "\tAsk: " << board.get_rate(qu.pair)->get_ask() << endl;
             ul_cout.unlock();
 
             g_quote_updates.pop();

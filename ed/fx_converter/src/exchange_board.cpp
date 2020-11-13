@@ -5,79 +5,62 @@
 
 using namespace std;
 
-// vector<vector<string>> ExchangeBoard::find_conversion_chains(const string &from, const string &to) const
-// {
-//     vector<vector<string>> chains;
 
-//     if (from == to)
-//         return chains;
-
-//     auto ccy1_iter = m_board.find(from);
-//     if (ccy1_iter == m_board.end())
-//         return chains;
-
-//     auto ccy2_iter = ccy1_iter->second.find(to);
-//     if (ccy2_iter != ccy1_iter->second.end())
-//     {
-//         chains.push_back(vector<string>{from, to});
-//         return chains;
-//     }
-
-//     return chains;
-// }
-
-
-double ExchangeBoard::convert(const string& from, const string& to, double amount)
+bool ExchangeBoard::convert(Conversion &conv)
 {
-    // if (from == to)
-    //     return amount;
+    auto i1 = m_board.find(conv.from);
 
-    // unordered_map<string, vector<shared_ptr<const ExchangeRate>>> chains;
-    // auto i1 = m_board.find(from);
+    if (i1 == m_board.end())
+    {
+        return false;
+    }
 
-    // // Check if 'from' ccy even exists
-    // if (i1 == m_board.end())
-    //     return -1;
+    if (conv.from == conv.to)
+    {
+        conv.converted_amount = conv.amount;
+        conv.rate = 1.0;
+        return true;
+    }
+
+    // Check if a direct conversion can be done
+    auto i2 = i1->second.find(conv.to);
+
+    if (i2 != i1->second.end())
+    {
+        conv.converted_amount = i2->second->convert_from(conv.from, conv.amount);
+        conv.rate = i2->second->get_from_quote(conv.from);
+        return true;
+    }
     
-    // // Check if a direct conversion can be done
-    // auto i2 = i1->second.find(to);
+    unordered_map<string, vector<shared_ptr<const ExchangeRate>>> chains;
+    
+    // Find all conversion chains, using 1 intermediary ccy
+    for (auto i_interm_ccy : i1->second)
+    {
+        vector<shared_ptr<const ExchangeRate>> ch;
+        auto iter_toccy = m_board[i_interm_ccy.first].find(conv.to);
 
-    // if (i2 != i1->second.end())
-    // {
-    //     cout << from << " -> " << to << endl;
-    //     cout << i2->second->pair_name() << endl;
-    //     cout << amount << " " << from << " -> " << i2->second->convert_from(from, amount) << " " << to << endl;
-
-    //     return i2->second->convert_from(from, amount);
-    // }
-  
-    // // Find all conversion chains, using 1 intermediary ccy
-    // for (auto i_interm_ccy : i1->second)
-    // {
-    //     vector<shared_ptr<const ExchangeRate>> ch;
-    //     auto iter_toccy = m_board[i_interm_ccy.first].find(to);
-
-    //     if (iter_toccy != m_board[i_interm_ccy.first].end())
-    //     {
-    //         ch.push_back(i_interm_ccy.second);
-    //         ch.push_back(iter_toccy->second);
+        if (iter_toccy != m_board[i_interm_ccy.first].end())
+        {
+            ch.push_back(i_interm_ccy.second);
+            ch.push_back(iter_toccy->second);
             
-    //         chains.insert(make_pair(i_interm_ccy.first, ch));
-    //     }
-    // }
+            chains.insert(make_pair(i_interm_ccy.first, ch));
+        }
+    }
 
-    // for (auto chain : chains)
-    // {
-    //     auto ccy1 = chain.second[0];
-    //     auto ccy2 = chain.second[1];
+    for (auto chain : chains)
+    {
+        auto ccy1 = chain.second[0];
+        auto ccy2 = chain.second[1];
 
-    //     cout << from << "->" << chain.first << "->" << to << endl;
-    //     cout << ccy1->pair_name() << " " << ccy2->pair_name() << endl;
-    //     cout << amount << " " << from << " -> " << 
-    //         ccy2->convert_to(to, ccy1->convert_from(from, amount)) << " " << to << endl << endl;
-    // }
+        cout << conv.from << "->" << chain.first << "->" << conv.to << endl;
+        cout << ccy1->pair_name() << " " << ccy2->pair_name() << endl;
+        cout << conv.amount << " " << conv.from << " -> " << 
+            ccy2->convert_to(conv.to, ccy1->convert_from(conv.from, conv.amount)) << " " << conv.to << endl << endl;
+    }
 
-    return 0;
+    return false;
 }
 
 shared_ptr<const ExchangeRate> ExchangeBoard::get_rate(const string &ccy_pair)
@@ -115,11 +98,11 @@ bool ExchangeBoard::load_rates(const string& fname)
             stod(tokens[2]), stod(tokens[3]), stod(tokens[4]));
         m_rates[sp->pair_name()] = sp;
 
-        m_board[sp->base()].insert(sp->quote());
-        m_board[sp->quote()].insert(sp->base());
+        // m_board[sp->base()].insert(sp->quote());
+        // m_board[sp->quote()].insert(sp->base());
 
-        // m_board[sp->base()][sp->quote()] = sp;
-        // m_board[sp->quote()][sp->base()] = sp;
+        m_board[sp->base()][sp->quote()] = sp;
+        m_board[sp->quote()][sp->base()] = sp;
     }
 
     return true;

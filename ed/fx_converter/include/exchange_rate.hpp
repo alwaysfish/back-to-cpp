@@ -35,6 +35,11 @@ public:
     float get_ask() const { return m_ask; }
     float get_last() const { return m_last; }
 
+    float get_from_rate(const string &from) const;
+    float get_to_rate(const string &to) const;
+    float get_from_quote(const string &from) const;
+    float get_to_quote(const string &to) const;
+
     double convert_from(const string &from, double amount) const;
     double convert_to(const string &to, double amount) const;
     
