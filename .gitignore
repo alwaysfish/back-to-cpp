@@ -36,3 +36,8 @@
 
 # Jetbrains
 .idea
+
+# CMakeFiles
+CMakeFiles
+cmake_install.cmake
+CMakeCache.txt

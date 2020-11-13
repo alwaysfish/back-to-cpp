@@ -3,4 +3,5 @@
 using namespace std;
 
 mutex g_mutex_cout;
-atomic<double> g_last_quote;
+
+SharedQueue<QuoteUpdate> g_quote_updates;
