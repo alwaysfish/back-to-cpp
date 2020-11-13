@@ -17,7 +17,7 @@ int main()
     ExchangeBoard board;
     unique_lock<mutex> ul_cout(g_mutex_cout, defer_lock);
     
-    if (!board.load_rates("./../../../datasets/exchange_rates.csv"))
+    if (!board.load_rates("./../../datasets/exchange_rates.csv"))
     {
         cout << "exchange_rates.csv file was not loaded. Exiting..." << endl;
         exit(0);
