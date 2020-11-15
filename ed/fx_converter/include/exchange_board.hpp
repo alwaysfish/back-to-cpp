@@ -1,3 +1,12 @@
+/*
+ExchangeBoard stores all exchange rates and allows to convert one currency to another.
+There are two key attributes:
+    m_rates: an unordered map that stores pointers to each ExchangeRate, loaded from a data file
+    m_board: a 2-dimensional unordered map, which allows to quickly check what conversions are possible
+        to do. First unordered map represents 'from' currency, and the second linked unordered_map represents
+        'to' currency. The values of the second unordered_map are pointers to exchange rates.
+*/
+
 #ifndef EXCHANGE_BOARD_HPP
 #define EXCHANGE_BOARD_HPP
 
@@ -16,8 +25,11 @@ struct Conversion
     double rate;
     double converted_amount;
     string pair;
+    bool cross;
+    string cross_ccy;
 
-    Conversion(const string &from_, const string &to_, double amount_) : from{from_}, to{to_}, amount{amount_} {}
+    Conversion(const string &from_, const string &to_, double amount_) : from{from_}, to{to_}, amount{amount_},
+        rate{0}, converted_amount{0}, cross{false} {}
 };
 
 class ExchangeBoard
@@ -27,7 +39,6 @@ private:
 
     std::unordered_map<std::string, std::shared_ptr<ExchangeRate>> m_rates;
     std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<ExchangeRate>>> m_board;
-    //std::unordered_map<std::string, std::set<std::string>> m_board;
 
 public:
     

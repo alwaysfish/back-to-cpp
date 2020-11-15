@@ -10,11 +10,11 @@ bool ExchangeBoard::convert(Conversion &conv)
 {
     auto i1 = m_board.find(conv.from);
 
+    // Check if a conversion from 'from' currency can be done
     if (i1 == m_board.end())
-    {
         return false;
-    }
 
+    // Check if 'from' and 'to' currencies are the same
     if (conv.from == conv.to)
     {
         conv.converted_amount = conv.amount;
@@ -22,13 +22,14 @@ bool ExchangeBoard::convert(Conversion &conv)
         return true;
     }
 
-    // Check if a direct conversion can be done
+    // Check if a direct conversion to 'to' currency can be done
     auto i2 = i1->second.find(conv.to);
 
     if (i2 != i1->second.end())
     {
         conv.converted_amount = i2->second->convert_from(conv.from, conv.amount);
         conv.rate = i2->second->get_from_quote(conv.from);
+        conv.pair = i2->second->pair_name();
         return true;
     }
     
@@ -49,18 +50,41 @@ bool ExchangeBoard::convert(Conversion &conv)
         }
     }
 
-    for (auto chain : chains)
+    // Check if any conversion chains were created
+    if (chains.size() == 0)
+        return false;
+
+    double highest_amount = 0.0, converted_amount = 0.0;
+    string cross_ccy;
+
+    // Find the best conversion chain
+    // A conversion chain is the best if it yields the highest amount of destination currency
+    for (auto &chain : chains)
     {
         auto ccy1 = chain.second[0];
         auto ccy2 = chain.second[1];
 
-        cout << conv.from << "->" << chain.first << "->" << conv.to << endl;
-        cout << ccy1->pair_name() << " " << ccy2->pair_name() << endl;
-        cout << conv.amount << " " << conv.from << " -> " << 
-            ccy2->convert_to(conv.to, ccy1->convert_from(conv.from, conv.amount)) << " " << conv.to << endl << endl;
+        converted_amount = ccy2->convert_to(conv.to, ccy1->convert_from(conv.from, conv.amount));
+        if (converted_amount > highest_amount)
+        {
+            highest_amount = converted_amount;
+            cross_ccy = chain.first;
+        }
     }
 
-    return false;
+    if (cross_ccy != "")
+    {
+        auto ccy1 = chains[cross_ccy][0];
+        auto ccy2 = chains[cross_ccy][1];
+
+        conv.converted_amount = ccy2->convert_to(conv.to, ccy1->convert_from(conv.from, conv.amount));
+        conv.rate = conv.converted_amount / conv.amount;
+        conv.pair = conv.from + "/" + conv.to;
+        conv.cross = true;
+        conv.cross_ccy = cross_ccy;
+    }
+
+    return true;
 }
 
 shared_ptr<const ExchangeRate> ExchangeBoard::get_rate(const string &ccy_pair)
@@ -97,9 +121,6 @@ bool ExchangeBoard::load_rates(const string& fname)
         auto sp = make_shared<ExchangeRate>(tokens[0], tokens[1],
             stod(tokens[2]), stod(tokens[3]), stod(tokens[4]));
         m_rates[sp->pair_name()] = sp;
-
-        // m_board[sp->base()].insert(sp->quote());
-        // m_board[sp->quote()].insert(sp->base());
 
         m_board[sp->base()][sp->quote()] = sp;
         m_board[sp->quote()][sp->base()] = sp;
