@@ -20,4 +20,5 @@ class ExchangeBoard{
         ExchangeBoard() {}
 
 };
-double const corr_mon(unordered_map<string, unordered_map<string,shared_ptr<ExchangeRate>>> &umap,const string &curr_from, const string &curr_to, const double &amount);
+double const corr_mon(unordered_map<string, unordered_map<string,shared_ptr<ExchangeRate>>>& umap, const string &_curr_from, const string &_curr_to, const double &amount);
+double conversion_intermed(unordered_map<string, unordered_map<string,shared_ptr<ExchangeRate>>>& umap, const string &curr_from, const string &intermed, const string &curr_to, const double &amount);

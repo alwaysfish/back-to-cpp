@@ -5,31 +5,28 @@
 #include <chrono>
 #include <thread>
 #include <mutex>
-using namespace std;
 
 #include "RandomWalk.hpp"
 
-
-
-int randomWalk(unordered_map<string, unordered_map<string, double>>& ubid,unordered_map<string,unordered_map<string, double>>& uask){
+//Goal is to create methods that will produce a random price changes for currencies
+void randomWalk(atomic<bool>& is_running){
     mutex mu;
     double t;
-    double x=(0.10/sqrt((24*60*60)/t))*(rand()/RAND_MAX-0.5)*4;
-    
-    this_thread::sleep_for(std::chrono::seconds(2));
 
-    double price_change=exp(x-1);
-    //unique_lock<mutex> p= (mu);
+    srand (std::time(NULL));
 
-    
-
-    return 0;
-}
-
-int main(){
-    unordered_map<string, unordered_map<string, double>> ubid;
-    unordered_map<string,unordered_map<string, double>> uask;
-    randomWalk(ubid,uask);
+    while(is_running){
+ 
+        double rand_num= (float) rand() / RAND_MAX;
         
-    thread t1();
-};
+        double x=(0.10/sqrt((24*60*60)))*(rand_num-0.5)*4;
+
+        double price_change=exp(x-1);
+
+        last_ask=last_ask+price_change;
+        last_bid=last_bid+price_change;
+
+        this_thread::sleep_for(std::chrono::seconds(2));
+    }
+
+}

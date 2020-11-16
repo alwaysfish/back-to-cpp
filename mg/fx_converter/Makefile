@@ -14,6 +14,12 @@ ExchangeRate.o: ExchangeRate.cpp ExchangeRate.hpp
 
 ExchangeBoard.o: ExchangeBoard.cpp ExchangeBoard.hpp
 	g++ -g -c ExchangeBoard.cpp
+	
+RandomWalk.o: RandomWalk.cpp RandomWalk.hpp
+	g++ -g -c RandomWalk.cpp
+
+Updater.o: Updater.cpp Updater.hpp
+	g++ -g -c Updater.cpp
 
 clean:
 	rm main.exe main.o Currency.o ExchangeBoard.o ExchangeRate.o
