@@ -33,6 +33,10 @@ void ExchangeBoard::readExchangeRatesFromFile(const string &fileName)
         key = pointerRate->getBase().append(pointerRate->getQuote()); //Map key is concatination of the rate base+quote
         //Add each exchange rate to an exchangeRates unordered_map
         exchangeRates[key] = pointerRate;
+
+        //Add each exchange to a nested unordered_map
+        exchangeBoard[pointerRate.get()->getBase()][pointerRate.get()->getQuote()] = pointerRate;
+        exchangeBoard[pointerRate.get()->getQuote()][pointerRate.get()->getBase()] = pointerRate;
     }
 }
 
@@ -47,79 +51,72 @@ vector<string> split(const string &stream, char delim)
     return result;
 }
 
-string findIntermediary(const unordered_map<string, const shared_ptr<ExchangeRate>> &rates, const string &base, const string &quote){
-    auto i1 = rates.find(base+quote); 
-    auto i2 = rates.find(quote+base); 
-    string intermediary;
-    //intermediary is the first value to be exchanged to
-    if (i1 == rates.end())
-    {
-        intermediary= i2->second.get()->getQuote();
-    } 
-    else if(i2 == rates.end()) 
-    { 
-        intermediary= i1->second.get()->getQuote();
-    } 
-    else if(i1==rates.end() && i2==rates.end())
-    {
-        //Else search for intermediary between two currencies
-        cout << "Cannot find currency pair";
-    }
-    //Code needs expanded to include a calculation to discover a true intermediary between two currency pairs
-    
-return intermediary;
-    
-}
-double convertToIntermediary(const unordered_map<string, shared_ptr<ExchangeRate>> &rates, const string &base, const string &quote, double amount, const string &intermediary){
-    auto i1 = rates.find(base+intermediary);
-    auto i2 = rates.find(intermediary+base);  
-
-    if(i1==rates.end()) 
-    {
-        //convert inverse if intermediary is base of pair
-        amount = amount * (1/(i2->second.get()->getAsk()));
-    }
-    else if (i2==rates.end())
-    {
-        amount = amount * (i1->second.get()->getAsk());
-    }
-    return amount;
-}
-
-double convertFromIntermediary(const unordered_map<string, shared_ptr<ExchangeRate>> &rates, const string &base, const string &quote, double amount, const string &intermediary){
-    auto i1 = rates.find(quote+intermediary);
-    auto i2 = rates.find(intermediary+quote);
-
-    if(i1==rates.end())
-    {
-        amount = amount * (i2->second.get()->getAsk());
-        
-    }
-    else if (i2==rates.end())
-    {
-        //convert inverse if intermediary is quote of pair
-        amount = amount * (1/i1->second.get()->getAsk());
-    
-    }
-    return amount;
-}
-
-double exchange(const unordered_map<string, shared_ptr<ExchangeRate>> &rates, const string &base, const string &quote, double amount, const string &intermediary)
+double ExchangeBoard::exchange(const string &base, const string &quote, double amount)
 {
-    if(base != intermediary) {
-        double intermediaryAmount;
-        intermediaryAmount = convertToIntermediary(rates, base, quote, amount, intermediary);
-        if(quote == intermediary) {
-            //if no seconded exchange is needed, return the first exchanged amount
-            amount = intermediaryAmount;
-        }
-        else {
-            amount = convertFromIntermediary(rates, base, quote, intermediaryAmount, intermediary);
-        }
+    auto fromRate = exchangeBoard.find(base);
+    auto toRate = exchangeBoard.find(quote);
+
+    //Validating base and quote are valid currencies
+    if(fromRate==exchangeBoard.end())
+    {
+        cout << "Currency " << base << " does not exist" << endl;
+        return -1;
     }
-    else if (base == intermediary) {
-        //if the calculated intermediary is already being exchanged from, only do 1 exchange and return
-        amount = convertFromIntermediary(rates, base, quote, amount, intermediary);
+    if(toRate==exchangeBoard.end())
+    {
+        cout << "Currency " << quote << " does not exist" << endl;
+        return -1;
     }
+
+    auto fromExch = fromRate->second.find(quote);
+    //Calculate if no intermediary required
+    if(fromExch != fromRate->second.end())
+    {
+        if(fromExch->second.get()->getBase()==base)
+        {
+            amount = amount * (fromExch->second.get()->getBid());
+        }
+        else
+        {
+            amount = amount * (1/fromExch->second.get()->getAsk());
+        }
+        
+        cout << "Converted Amount: " << amount << " " << quote << endl;
+    }
+    else
+    /*
+    {
+        //Find intermediary curriences based off the to rate and common base/quote values
+        auto intermExch1 = toRate->second.find(fromRate->second.get()->getBase());
+        auto intermExch2 = toRate->second.find(fromRate->second.get()->getQuote());
+        fromRate->second.
+        if(intermExch1 != toRate->second.end())
+        {
+            //Exchange
+        }
+        else if (intermExch2 != toRate->second.end())
+        {
+            //Exchange
+        }
+        else if (intermExch2 == toRate->second.end() && intermExch1 == toRate->second.end())
+        {
+            cout << "Cannot make currency exchange" << endl;
+            return -1;
+        }
+        //if intermPair.base or intermPair.quote = fromExch.quote or fromExch.base
+        //if 
+            //we have a pair
+            //amount calc
+                //if fromExch.base = base
+                    //normal
+                    //else
+                    //invers
+            //second amount calc
+                //if intermPair.quote = quote
+                    //normal
+                    //else
+                    //inverse   
+    }
+    */
     return amount;
 }
