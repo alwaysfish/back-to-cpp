@@ -1,7 +1,8 @@
 #pragma once
 #include <atomic>
-
-#include "ExchangeRate.hpp"
+#include <unordered_map>
+#include <string>
+#include <thread>
 
 double last_ask;
 double last_bid;

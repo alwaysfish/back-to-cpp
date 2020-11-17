@@ -1,16 +1,17 @@
-#include <unordered_map>
-#include <string>
+#include <atomic>
+#include <mutex>
 #include <ctime> 
 #include <random>
 #include <chrono>
-#include <thread>
+
 #include <mutex>
+
 
 #include "RandomWalk.hpp"
 
 //Goal is to create methods that will produce a random price changes for currencies
-void randomWalk(atomic<bool>& is_running){
-    mutex mu;
+void randomWalk(std::atomic<bool>& is_running){
+    std::mutex mu;
     double t;
 
     srand (std::time(NULL));
@@ -23,10 +24,14 @@ void randomWalk(atomic<bool>& is_running){
 
         double price_change=exp(x-1);
 
+        mu.lock();
         last_ask=last_ask+price_change;
         last_bid=last_bid+price_change;
+        mu.unlock();
 
-        this_thread::sleep_for(std::chrono::seconds(2));
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+
+
     }
 
 }

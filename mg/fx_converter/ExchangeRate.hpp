@@ -42,7 +42,7 @@ class ExchangeRate{
         delete last;
     }
 */
-   string getBase (){
+    const string & getBase () const {
         return base;
     }
 
@@ -51,7 +51,7 @@ class ExchangeRate{
     }
 
 
-    string getQuote (){
+    const string & getQuote () const {
         return quote;
     }
 
@@ -60,7 +60,7 @@ class ExchangeRate{
     }
 
 
-    double getBid (){
+    const double & getBid () const {
 
         return bid;
     }
@@ -70,7 +70,7 @@ class ExchangeRate{
     }
 
 
-    double getAsk (){
+    const double & getAsk () const {
         return ask;
     }
 
@@ -79,7 +79,7 @@ class ExchangeRate{
     }
 
 
-    double getLast (){
+    const double & getLast () const {
         return last;
     }
 

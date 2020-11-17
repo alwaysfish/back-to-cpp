@@ -22,9 +22,7 @@ int main(){
     //getFileContent("  /home/margon/projects/back-to-cpp/datasets/currencies.csv",currencies);
     getExchange("/home/margon/projects/back-to-cpp/datasets/exchange_rates.csv", umap);
 
-    corr_mon(umap,"USD","USD",100);
-    corr_mon(umap,"USD","GBP",0);
-    corr_mon(umap,"GBP","SEK",200.5);
+
 //- asks for amount and currency to exchange from
     cout<<"How much money out?\n";
     //cin>> mon;
@@ -38,7 +36,7 @@ int main(){
     cout<<"Which currency to exchange to?\n";
     curr_to="GBP";
     //cin>> curr_to;
-    conversion_intermed(umap,curr_from,"USD",curr_to,amount);
+    //conversion_intermed(umap,curr_from,"USD",curr_to,amount);
 
     double conversion=corr_mon(umap,curr_from,curr_to,amount);
     
@@ -55,6 +53,9 @@ int main(){
     atomic<bool> is_running(true);
     thread t1(randomWalk, std::ref(is_running));
     thread t2(std::ref(updater), std::ref(is_running));
+
+    umap["GBP"]["JPY"] -> setAsk(last_ask);
+    umap["GBP"]["JPY"] -> setBid(last_bid);
 
     this_thread::sleep_for(std::chrono::seconds(2));
     is_running=false;

@@ -1,3 +1,9 @@
+#include <chrono>
+#include <thread>
+#include <mutex>
+#include <condition_variable>
+using namespace std;
+
 #include "Updater.hpp"
 
 //Update the ExchangeRates with the price changes in Random Walk.cpp

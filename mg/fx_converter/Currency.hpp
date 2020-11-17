@@ -22,7 +22,7 @@ class Currency{
     }
 
 
-    string getCode (){
+    const string & getCode () const{
         return code;
     }
 
@@ -31,7 +31,7 @@ class Currency{
     }
 
 
-    string getName (){
+    const string & getName () const {
         return name;
     }
 
@@ -39,7 +39,7 @@ class Currency{
         name=new_name;
     }
 
-    double getNumericCode (){
+    const double & getNumericCode () const {
         return numeric_code;
     }
 
@@ -48,7 +48,7 @@ class Currency{
     }
 
 
-    double getMinorUnit (){
+    const double & getMinorUnit () const {
         return minor_unit;
     }
 

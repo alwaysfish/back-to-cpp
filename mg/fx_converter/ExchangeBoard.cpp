@@ -17,6 +17,8 @@ double maxCurrency(unordered_map<string, double> curr_to_amount){
     }
     return current_max;
 }
+
+//find the intermediate currency
 double conversion_intermed(unordered_map<string, unordered_map<string,shared_ptr<ExchangeRate>>>& umap, const string &curr_from, const string &intermed, const string &curr_to, const double &amount){
     vector <string> bases;
     for(const auto& base:umap){
