@@ -30,7 +30,7 @@ void ExchangeBoard::readExchangeRatesFromFile(const string &fileName)
         auto pointerRate = make_shared<ExchangeRate>(values[0], values[1],
         stod(values[2]), stod(values[3]), stod(values[4]));
 
-        key = pointerRate->getBase().append(pointerRate->getQuote()); //Map key is concatination of the rate base+quote
+        key = pointerRate->getPair(); //Map key is concatination of the rate base+quote
         //Add each exchange rate to an exchangeRates unordered_map
         exchangeRates[key] = pointerRate;
 
@@ -83,8 +83,8 @@ double ExchangeBoard::exchange(const string &base, const string &quote, double a
         
         cout << "Converted Amount: " << amount << " " << quote << endl;
     }
-    else
     /*
+    else
     {
         //Find intermediary curriences based off the to rate and common base/quote values
         auto intermExch1 = toRate->second.find(fromRate->second.get()->getBase());
