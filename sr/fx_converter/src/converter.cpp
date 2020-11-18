@@ -26,7 +26,7 @@ int main()
     atomic<bool> run_threads(true);
     
     //Thread that randomly changes the price of exchange rates over 15 seconds
-    thread thread1(change_rate, ref(run_threads));
+    //thread thread1(change_rate, ref(run_threads));
     
     ExchangeBoard exchangeBoard;
     vector<Currency> currencies;
@@ -53,6 +53,6 @@ int main()
     
     exchangeBoard.exchange(base, quote, amount);
    
-    thread1.join();
+    //thread1.join();
     return 0;
 }

@@ -1,8 +1,5 @@
 /*ExchangeRate class allows for the creation of ExchangeRate objects
 via the readFromFile method in ExchangeBoard*/
-#ifndef EXCHANGERATE_HPP
-#define EXCHANGERATE_HPP
-
 #include <string>
 #include <unordered_map>
 
@@ -31,10 +28,9 @@ class ExchangeRate
 
         const string & getBase() const { return base; }
         const string & getQuote() const { return quote; }
-        const double getBid() const;
-        const double getAsk() const;
-        const double getLast() const;
+        const double getBid() const { return bid; }
+        const double getAsk() const { return ask; }
+        const double getLast() const { return last; };
         string getPair() const { return curPair;; };
 
 };
-#endif

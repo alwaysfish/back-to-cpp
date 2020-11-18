@@ -17,7 +17,7 @@ BOOST_AUTO_TEST_CASE(testThatAValidBaseMustBeEntered)
 {
     ExchangeBoard exchangeBoard;
     exchangeBoard.readExchangeRatesFromFile("/home/stephen/projects/back-to-cpp/datasets/exchange_rates.csv");
-    double convertedAmount = exchangeBoard.exchange("UDS", "GBP", 0.0); //Incorrect base returns amount + error
+    double convertedAmount = exchangeBoard.exchange("UDS", "GBP", 0); //Incorrect base returns amount + error
     BOOST_CHECK(convertedAmount == 0.0);
 }
 
@@ -25,7 +25,7 @@ BOOST_AUTO_TEST_CASE(testThatAValidQuoteMustBeEntered)
 {
     ExchangeBoard exchangeBoard;
     exchangeBoard.readExchangeRatesFromFile("/home/stephen/projects/back-to-cpp/datasets/exchange_rates.csv");
-    double convertedAmount = exchangeBoard.exchange("USD", "GP", 0.0); //Incorrect base returns amount + error
+    double convertedAmount = exchangeBoard.exchange("USD", "GP", 0); //Incorrect quote returns amount + error
     BOOST_CHECK(convertedAmount == 0.0);
 }   
 
