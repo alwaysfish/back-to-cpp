@@ -8,10 +8,10 @@
 #include <mutex>
 
 
-#include "RandomWalk.hpp"
+#include "../include/RandomWalk.hpp"
 
 //Goal is to create methods that will produce a random price changes for currencies
-void randomWalk(std::atomic<bool>& is_running){
+void randomWalk(std::atomic<bool>& is_running,RandomWalk randW){
     std::condition_variable wait_blocks;
     std::mutex mu;
     double t;
@@ -27,8 +27,8 @@ void randomWalk(std::atomic<bool>& is_running){
         double price_change=exp(x-1);
 
         std::unique_lock<std::mutex> lck (mu);
-        last_ask=last_ask+price_change;
-        last_bid=last_bid+price_change;
+        randW.last_ask=randW.last_ask+price_change;
+        randW.last_bid=randW.last_bid+price_change;
 
         std::this_thread::sleep_for(std::chrono::seconds(2));
 

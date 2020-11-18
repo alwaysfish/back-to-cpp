@@ -9,4 +9,6 @@ struct RandomWalk{
     double last_bid=0;
 };
 
+
+
 void randomWalk(std::atomic<bool>& is_running);

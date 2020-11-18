@@ -1,10 +1,10 @@
 #include <iostream>
 using namespace std;
 
-#include "ExchangeBoard.hpp"
-#include "ExchangeRate.hpp"
-#include "RandomWalk.hpp"
-#include "Updater.hpp"
+#include "../include/ExchangeBoard.hpp"
+#include "../include/ExchangeRate.hpp"
+#include "../include/RandomWalk.hpp"
+#include "../include/Updater.hpp"
 
 //
 
@@ -12,7 +12,7 @@ int main(){
     nested_unord_map umap;
 
 //- loads exchange rates from a CSV file into nested unordered map
-    insertExchange("/home/margon/projects/back-to-cpp/datasets/exchange_rates.csv", umap);
+    insertCSV( umap);
 
 
 //- asks for amount and currency to exchange from, currency to exchange from and the amount exchanged
@@ -39,20 +39,20 @@ int main(){
     cout<<conversion;
 
     //auto point_val= umap.find(curr_from+curr_to);
+    RandomWalk randW;
 
+    randW.last_ask=umap[curr_from][curr_to]->getAsk();
+    randW.last_bid=umap[curr_from][curr_to]->getBid();
 
-    last_ask=umap[curr_from][curr_to]->getAsk();
-    last_bid=umap[curr_from][curr_to]->getBid();
-
-    cout<<last_ask;
-    cout<<last_bid;
+    cout<<randW.last_ask;
+    cout<<randW.last_bid;
 
     atomic<bool> is_running(true);
-    thread t1(randomWalk, std::ref(is_running));
-    thread t2(std::ref(updater), std::ref(is_running));
+    thread t1(randomWalk, std::ref(is_running),randW);
+    thread t2(std::ref(updater), std::ref(is_running),randW);
 
-    umap["GBP"]["JPY"]->setAsk(last_ask);
-    umap["GBP"]["JPY"]->setBid(last_bid);
+    umap["GBP"]["JPY"]->setAsk(randW.last_ask);
+    umap["GBP"]["JPY"]->setBid(randW.last_bid);
 
     this_thread::sleep_for(std::chrono::seconds(2));
     is_running=false;

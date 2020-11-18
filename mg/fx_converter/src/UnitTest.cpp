@@ -1,28 +1,33 @@
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE GRNN UnitTest
-//#define BOOST_TEST_MODULE GRNN test suite 
 #include <boost/test/unit_test.hpp>
 
 using namespace std;
 
-#include "ExchangeBoard.hpp"
-#include "ExchangeRate.hpp"
+#include "../include/ExchangeBoard.hpp"
+#include "../include/ExchangeRate.hpp"
 
 
-BOOST_AUTO_TEST_CASE(corr_mon_test){
+BOOST_AUTO_TEST_CASE(file_test){
 
-    unordered_map<string, unordered_map<string,shared_ptr<ExchangeRate>>> umap;
+    nested_unord_map umap;
 
-    BOOST_CHECK(insertExchange("/home/margon/projects/back-to-cpp/datasets/exchange_rates.csv", umap));
+    BOOST_CHECK(insertCSV(umap));
 
-    BOOST_CHECK(umap["GBP"]["USD"] -> getAsk()==1.3701);
-    BOOST_CHECK(umap["GBP"]["USD"] -> getBid()==1.373);
+    if(umap.empty())
+    BOOST_FAIL("nested unordered map is empty");
+    
+    BOOST_CHECK_EQUAL(umap["GBP"]["USD"]->getBid(),1.3701);
+
+
+}
+
+BOOST_AUTO_TEST_CASE(coverter_test){
+    
+    nested_unord_map umap;
+    insertCSV(umap);
 
     BOOST_CHECK(converter(umap,"USD","USD",100)==0);
 
     BOOST_CHECK(converter(umap,"USD","GBP",0)==0);
-
-    //BOOST_CHECK(corr_mon(umap,"GBP","SEK",200.5)!=0);
-
-    
 }

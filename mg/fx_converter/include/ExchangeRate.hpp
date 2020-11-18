@@ -25,13 +25,13 @@ class ExchangeRate{
         ExchangeRate() {}
          //~ExchangeRate();
 
-    ExchangeRate(std::string new_base, std::string new_quote, double new_bid, double new_ask, double new_last){
+    /*ExchangeRate(std::string new_base, std::string new_quote, double new_bid, double new_ask, double new_last){
             base= new_base;
             quote= new_quote;
             bid= new_bid;
             ask= new_ask;
             last= new_last;
-    }
+    }*/
 
     /*ExchangeRate::ExchangeRate(){
         delete base;
@@ -87,4 +87,6 @@ class ExchangeRate{
     }
 };
 
-bool const insertExchange(const std::string & fileName,  std::unordered_map<std::string, std::unordered_map<std::string,std::shared_ptr<ExchangeRate>>> &umap);
+typedef std::unordered_map<std::string, std::unordered_map<std::string,std::shared_ptr<ExchangeRate>>> nested_unord_map;
+
+bool const insertCSV(nested_unord_map &umap);

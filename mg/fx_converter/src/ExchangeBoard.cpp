@@ -3,8 +3,8 @@
 #include <algorithm>
 using namespace std;
 
-#include "ExchangeRate.hpp"
-#include "ExchangeBoard.hpp"
+#include "../include/ExchangeRate.hpp"
+#include "../include/ExchangeBoard.hpp"
 
 
 typedef unordered_map<string, unordered_map<string,shared_ptr<ExchangeRate>>> nested_unord_map;
