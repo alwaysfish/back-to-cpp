@@ -12,13 +12,14 @@ int main(){
     nested_unord_map umap;
 
 //- loads exchange rates from a CSV file into nested unordered map
-    insertCSV( umap);
+
+    insertCSV(umap);
 
 
 //- asks for amount and currency to exchange from, currency to exchange from and the amount exchanged
     cout<<"How much money out?\n";
     //cin>> mon;
-    double amount=50.5;
+    const double amount=50.5;
     
     cout<<"Which currency to exchange from?\n";
     //cin>> curr_from;
@@ -34,7 +35,7 @@ int main(){
 
 
     //Finds conversions and outputs the greatest exchange converter
-    double conversion=converter(umap,curr_from,curr_to,amount);
+   double conversion=converter(umap,curr_from,curr_to,amount);
     
     cout<<conversion;
 

@@ -11,7 +11,7 @@
 #include "../include/RandomWalk.hpp"
 
 //Goal is to create methods that will produce a random price changes for currencies
-void randomWalk(std::atomic<bool>& is_running,RandomWalk randW){
+void randomWalk(std::atomic<bool> is_running,RandomWalk randW){
     std::condition_variable wait_blocks;
     std::mutex mu;
     double t;

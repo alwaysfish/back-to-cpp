@@ -11,4 +11,4 @@ struct RandomWalk{
 
 
 
-void randomWalk(std::atomic<bool>& is_running);
+void randomWalk(std::atomic<bool> is_running,RandomWalk randW);

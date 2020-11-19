@@ -1,5 +1,5 @@
 #include <fstream>
-#include <iostream>
+
 #include <cstdio>
 #include <vector>
 #include <sstream>
@@ -7,17 +7,14 @@
 #include <dirent.h>
 #include <boost/algorithm/string/predicate.hpp>
 
-#include <unordered_map>
-using namespace std;
-
 #include "../include/ExchangeRate.hpp"
 #include "../include/ExchangeBoard.hpp"
 
-typedef unordered_map<string,shared_ptr<ExchangeRate>> unord_map ;
+typedef std::unordered_map<std::string,std::shared_ptr<ExchangeRate>> unord_map ;
 
 //Function to create unordered map containing the base, quote and ExchangeRate pointer  key<Base>, key<Quote>, value<ExchangeRate pointer>
 nested_unord_map bid_insert(unord_map &inmap, ExchangeRate &ex_rate, nested_unord_map &umap){
-    shared_ptr<ExchangeRate> er_pointer=make_shared<ExchangeRate>(ex_rate);
+    std::shared_ptr<ExchangeRate> er_pointer=std::make_shared<ExchangeRate>(ex_rate);
     inmap[ex_rate.getQuote()]=er_pointer;
     umap[ex_rate.getBase()]=inmap;
     return umap;
@@ -27,7 +24,7 @@ nested_unord_map bid_insert(unord_map &inmap, ExchangeRate &ex_rate, nested_unor
 bool const insertCSV(nested_unord_map &umap){   
 
     //Loop through directory to obtain files
-    const char * path="/home/margon/projects/back-to-cpp/datasets";
+    /*const char * path="/home/margon/projects/back-to-cpp/datasets";
     DIR *dir;
     std::string file_name;
     struct dirent *reader;
@@ -46,7 +43,8 @@ bool const insertCSV(nested_unord_map &umap){
     }else{
         cout<<"Cannot open directory";
     }
-/*
+
+
     //MAKE SURE DIR, PATH AND READER DELETED
     //cout<<dir<<path<<reader;
     //delete path, dir, reader;
@@ -82,18 +80,18 @@ bool const insertCSV(nested_unord_map &umap){
 
     //getline(ifstream(file_name)) ;
 
-    const string & fileName="datasets/exchange_rates.csv";  
+    const std::string & fileName="datasets/exchange_rates.csv";  
     // Open the File
-    ifstream file(fileName.c_str());
+    std::ifstream file(fileName.c_str());
 
     if(!file)
     {
-        std::cout << "Cannot open the File : "<<fileName<<endl;
+        std::cout << "Cannot open the File : "<<fileName<<std::endl;
         return false;
     }
     
     
-    string line;
+    std::string line;
     unord_map aud_bid;
     unord_map eur_bid;
     unord_map gbp_bid;
@@ -101,14 +99,14 @@ bool const insertCSV(nested_unord_map &umap){
     unord_map nzd_bid;    
     
     // Skip 1st line and read the next line from File untill it reaches the end.
-    getline(file,line);
-    while(getline(file,line))
+    std::getline(file,line);
+    while(std::getline(file,line))
     {   
-        istringstream ss(line);
+        std::istringstream ss(line);
         ExchangeRate ex_rate;
 
         for (int i = 0; i < 5; i++){
-            getline(ss, line, ',');
+            std::getline(ss, line, ',');
             if (i==0){
                 ex_rate.setBase(line);
             }
@@ -145,7 +143,7 @@ bool const insertCSV(nested_unord_map &umap){
             umap=bid_insert(usd_bid,ex_rate,umap);
         }
         else if((ex_rate.getBase()!="AUD")||(ex_rate.getBase()!="EUR")||(ex_rate.getBase()!="GBP")||(ex_rate.getBase()!="NZD")||(ex_rate.getBase()!="USD")){
-            cout<<"new currency: "<<ex_rate.getBase();
+            std::cout<<"new currency: "<<ex_rate.getBase();
             return false;
         }      
     };
@@ -153,10 +151,4 @@ bool const insertCSV(nested_unord_map &umap){
     //Close The File
     file.close();
     return true;
-}
-
-int main(){
-
-    nested_unord_map umap;
-    insertCSV(umap);
 }

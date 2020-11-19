@@ -231,33 +231,6 @@ src/RandomWalk.cpp.s:
 	$(MAKE) -f CMakeFiles/main.exe.dir/build.make CMakeFiles/main.exe.dir/src/RandomWalk.cpp.s
 .PHONY : src/RandomWalk.cpp.s
 
-src/UnitTest.o: src/UnitTest.cpp.o
-
-.PHONY : src/UnitTest.o
-
-# target to build an object file
-src/UnitTest.cpp.o:
-	$(MAKE) -f CMakeFiles/main.exe.dir/build.make CMakeFiles/main.exe.dir/src/UnitTest.cpp.o
-.PHONY : src/UnitTest.cpp.o
-
-src/UnitTest.i: src/UnitTest.cpp.i
-
-.PHONY : src/UnitTest.i
-
-# target to preprocess a source file
-src/UnitTest.cpp.i:
-	$(MAKE) -f CMakeFiles/main.exe.dir/build.make CMakeFiles/main.exe.dir/src/UnitTest.cpp.i
-.PHONY : src/UnitTest.cpp.i
-
-src/UnitTest.s: src/UnitTest.cpp.s
-
-.PHONY : src/UnitTest.s
-
-# target to generate assembly for a file
-src/UnitTest.cpp.s:
-	$(MAKE) -f CMakeFiles/main.exe.dir/build.make CMakeFiles/main.exe.dir/src/UnitTest.cpp.s
-.PHONY : src/UnitTest.cpp.s
-
 src/Updater.o: src/Updater.cpp.o
 
 .PHONY : src/Updater.o
@@ -333,9 +306,6 @@ help:
 	@echo "... src/RandomWalk.o"
 	@echo "... src/RandomWalk.i"
 	@echo "... src/RandomWalk.s"
-	@echo "... src/UnitTest.o"
-	@echo "... src/UnitTest.i"
-	@echo "... src/UnitTest.s"
 	@echo "... src/Updater.o"
 	@echo "... src/Updater.i"
 	@echo "... src/Updater.s"

@@ -2,17 +2,10 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
 #include <unordered_map>
 #include <memory>
+
 //## Class __ExchangeRate__
-
-//Attributes:
-
-//- from currency
-//- to currency
-//- rate
-
 class ExchangeRate{
     private:
         std::string base;
@@ -24,14 +17,6 @@ class ExchangeRate{
     public:
         ExchangeRate() {}
          //~ExchangeRate();
-
-    /*ExchangeRate(std::string new_base, std::string new_quote, double new_bid, double new_ask, double new_last){
-            base= new_base;
-            quote= new_quote;
-            bid= new_bid;
-            ask= new_ask;
-            last= new_last;
-    }*/
 
     /*ExchangeRate::ExchangeRate(){
         delete base;
@@ -85,6 +70,15 @@ class ExchangeRate{
     void setLast(double new_last){
        last=new_last;
     }
+
+    /*ExchangeRate(std::string new_base, std::string new_quote, double new_bid, double new_ask, double new_last){
+            base.setBase(new_base);
+            quote.setQuote(new_quote);
+            bid.setBid(new_bid);
+            ask.setAsk(new_ask);
+            last.setLast(new_last);
+    }*/
+
 };
 
 typedef std::unordered_map<std::string, std::unordered_map<std::string,std::shared_ptr<ExchangeRate>>> nested_unord_map;

@@ -1,9 +1,10 @@
 #include <vector>
 #include <unordered_map>
 #include <algorithm>
+#include <string>
+#include <boost/algorithm/string.hpp>
 using namespace std;
 
-#include "../include/ExchangeRate.hpp"
 #include "../include/ExchangeBoard.hpp"
 
 
@@ -47,16 +48,17 @@ double check_intermed(nested_unord_map& umap, const string &curr_from, const str
 
 
 //Conversion calculator--finds out the exchange rate between the currency from to the exchanged currency- including any intermediate currencies
-double const converter(nested_unord_map& umap, const string &_curr_from, const string &_curr_to, double &amount){
-  
+double const converter(nested_unord_map& umap, const string &_curr_from, const string &_curr_to, const double amount){
+
     unordered_map<string, double> curr_to_amount;
     double convers;
     vector<string> base_curr;
 
     //Standardizing input
-    //TO DO----> MAKES STRINGS UPPER
-    const string curr_from=_curr_from;
-    const string curr_to=_curr_to;
+    std::string curr_from= boost::to_upper_copy(_curr_from);
+    std::string curr_to=boost::to_upper_copy(_curr_to);
+    cout<<curr_to<<endl;
+
     bool is_num=isdigit(amount);
 
     //Validation
@@ -148,15 +150,14 @@ double const converter(nested_unord_map& umap, const string &_curr_from, const s
     std::cout<<amount<<" "<<curr_from<<" successfully changed to "<<conversion<<" "<<curr_to;
     return conversion;
 };
-
-/*int main(){
+/*
+int main(){
      unordered_map<string, unordered_map<string,shared_ptr<ExchangeRate>>> umap;
 
 //- loads currencies information from a CSV file
 //- loads exchange rates from a CSV file 
- 
-    //getFileContent("  /home/margon/projects/back-to-cpp/datasets/currencies.csv",currencies);
-   insertExchange("/home/margon/projects/back-to-cpp/datasets/exchange_rates.csv", umap);
+
+   insertCSV(umap);
 
     double conversion= converter(umap,"USD","GBP",100);
 
