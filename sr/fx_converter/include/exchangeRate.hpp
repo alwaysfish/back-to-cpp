@@ -30,7 +30,7 @@ class ExchangeRate
         const string & getQuote() const { return quote; }
         const double getBid() const { return bid; }
         const double getAsk() const { return ask; }
-        const double getLast() const { return last; };
-        string getPair() const { return curPair;; };
+        const double getLast() const { return last; }
+        string getPair() const { return curPair; }
 
 };

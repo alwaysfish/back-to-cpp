@@ -34,7 +34,7 @@ void ExchangeBoard::readExchangeRatesFromFile(const string &fileName)
         //Add each exchange rate to an exchangeRates unordered_map
         exchangeRates[key] = pointerRate;
 
-        //Add each exchange to a nested unordered_map
+        //Add each exchange to a nested unordered_map, key is base and quote, or quote and base
         exchangeBoard[pointerRate.get()->getBase()][pointerRate.get()->getQuote()] = pointerRate;
         exchangeBoard[pointerRate.get()->getQuote()][pointerRate.get()->getBase()] = pointerRate;
     }
@@ -83,40 +83,29 @@ double ExchangeBoard::exchange(const string &base, const string &quote, double a
         
         cout << "Converted Amount: " << amount << " " << quote << endl;
     }
-    /*
-    else
-    {
+
         //Find intermediary curriences based off the to rate and common base/quote values
+
+        /* Needs some kind of search through each map to find the intermediary currency
+        based on a common base/quote value between the two*/
+
+        /*
         auto intermExch1 = toRate->second.find(fromRate->second.get()->getBase());
         auto intermExch2 = toRate->second.find(fromRate->second.get()->getQuote());
         fromRate->second.
         if(intermExch1 != toRate->second.end())
         {
-            //Exchange
+            amount = amount * (intermExch2->second.get().getBid());
         }
         else if (intermExch2 != toRate->second.end())
         {
-            //Exchange
+            amount = amount * (1/intermExch1->second.get().getAsk());
         }
         else if (intermExch2 == toRate->second.end() && intermExch1 == toRate->second.end())
         {
             cout << "Cannot make currency exchange" << endl;
             return -1;
-        }
-        //if intermPair.base or intermPair.quote = fromExch.quote or fromExch.base
-        //if 
-            //we have a pair
-            //amount calc
-                //if fromExch.base = base
-                    //normal
-                    //else
-                    //invers
-            //second amount calc
-                //if intermPair.quote = quote
-                    //normal
-                    //else
-                    //inverse   
-    }
-    */
+        } 
+        */
     return amount;
 }
