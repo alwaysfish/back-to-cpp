@@ -111,44 +111,44 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named exchangeTests.exe
+# Target rules for targets named exchangeTests
 
 # Build rule for target.
-exchangeTests.exe: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 exchangeTests.exe
-.PHONY : exchangeTests.exe
+exchangeTests: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 exchangeTests
+.PHONY : exchangeTests
 
 # fast build rule for target.
-exchangeTests.exe/fast:
-	$(MAKE) -f CMakeFiles/exchangeTests.exe.dir/build.make CMakeFiles/exchangeTests.exe.dir/build
-.PHONY : exchangeTests.exe/fast
+exchangeTests/fast:
+	$(MAKE) -f CMakeFiles/exchangeTests.dir/build.make CMakeFiles/exchangeTests.dir/build
+.PHONY : exchangeTests/fast
 
-exchangeTests.o: exchangeTests.cpp.o
+home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.o: home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.cpp.o
 
-.PHONY : exchangeTests.o
+.PHONY : home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.o
 
 # target to build an object file
-exchangeTests.cpp.o:
-	$(MAKE) -f CMakeFiles/exchangeTests.exe.dir/build.make CMakeFiles/exchangeTests.exe.dir/exchangeTests.cpp.o
-.PHONY : exchangeTests.cpp.o
+home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.cpp.o:
+	$(MAKE) -f CMakeFiles/exchangeTests.dir/build.make CMakeFiles/exchangeTests.dir/home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.cpp.o
+.PHONY : home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.cpp.o
 
-exchangeTests.i: exchangeTests.cpp.i
+home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.i: home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.cpp.i
 
-.PHONY : exchangeTests.i
+.PHONY : home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.i
 
 # target to preprocess a source file
-exchangeTests.cpp.i:
-	$(MAKE) -f CMakeFiles/exchangeTests.exe.dir/build.make CMakeFiles/exchangeTests.exe.dir/exchangeTests.cpp.i
-.PHONY : exchangeTests.cpp.i
+home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.cpp.i:
+	$(MAKE) -f CMakeFiles/exchangeTests.dir/build.make CMakeFiles/exchangeTests.dir/home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.cpp.i
+.PHONY : home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.cpp.i
 
-exchangeTests.s: exchangeTests.cpp.s
+home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.s: home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.cpp.s
 
-.PHONY : exchangeTests.s
+.PHONY : home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.s
 
 # target to generate assembly for a file
-exchangeTests.cpp.s:
-	$(MAKE) -f CMakeFiles/exchangeTests.exe.dir/build.make CMakeFiles/exchangeTests.exe.dir/exchangeTests.cpp.s
-.PHONY : exchangeTests.cpp.s
+home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.cpp.s:
+	$(MAKE) -f CMakeFiles/exchangeTests.dir/build.make CMakeFiles/exchangeTests.dir/home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.cpp.s
+.PHONY : home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.cpp.s
 
 # Help Target
 help:
@@ -158,10 +158,10 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... exchangeTests.exe"
-	@echo "... exchangeTests.o"
-	@echo "... exchangeTests.i"
-	@echo "... exchangeTests.s"
+	@echo "... exchangeTests"
+	@echo "... home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.o"
+	@echo "... home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.i"
+	@echo "... home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.s"
 .PHONY : help
 
 
