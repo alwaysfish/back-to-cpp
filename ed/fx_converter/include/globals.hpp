@@ -1,8 +1,6 @@
 #pragma once
 
 #include <mutex>
-#include <atomic>
-#include <queue>
 #include "shared_queue.hpp"
 
 struct QuoteUpdate
