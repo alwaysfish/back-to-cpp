@@ -1,3 +1,8 @@
+/*
+
+*/
+
+
 #ifndef CURRENCY_HPP
 #define CURRENCY_HPP
 
@@ -13,7 +18,8 @@ private:
     int m_numeric_code;
 
 public:
-    Currency(const string& name, const string& code, const int numeric_code);
+    Currency(const string& name, const string& code, const int numeric_code) : 
+        m_name{name}, m_code{code}, m_numeric_code{numeric_code} {}
     ~Currency() {}
 
     const string& name() const { return m_name; }
