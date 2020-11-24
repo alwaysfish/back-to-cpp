@@ -87,7 +87,7 @@ bool ExchangeBoard::convert(Conversion &conv)
     return true;
 }
 
-shared_ptr<const ExchangeRate> ExchangeBoard::get_rate(const string &ccy_pair)
+ExchangeRatePtr ExchangeBoard::get_rate(const string &ccy_pair)
 {
     lock_guard<mutex> lg(m_mutex);
 
@@ -132,6 +132,8 @@ bool ExchangeBoard::load_rates(const string& fname)
 void ExchangeBoard::update_rate(const string &ccy_pair, double last)
 {
     lock_guard<mutex> ul(m_mutex);
+    ExchangeRatePtr ptr = get_rate(ccy_pair);
 
-    m_rates[ccy_pair]->update_all(last - m_rates[ccy_pair]->get_last());
+    if (ptr != nullptr)
+        ptr->update_all(last - ptr->get_last());
 }

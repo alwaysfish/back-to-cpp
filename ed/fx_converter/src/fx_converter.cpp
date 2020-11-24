@@ -12,8 +12,14 @@
 
 using namespace std;
 
-int main()
+int main(int argc, char *argv[])
 {
+    if (argc == 0 || argc < 3 || string(argv[1]) != "-d")
+    {
+        cout << "Usage: -d <csv_file_name>" << endl;
+        return 1;
+    }
+
     ExchangeBoard board;
     unique_lock<mutex> ul_cout(g_mutex_cout, defer_lock);
     vector<Conversion> conversions;
@@ -22,26 +28,24 @@ int main()
     conversions.push_back(Conversion("GBP", "EUR", 100));
     conversions.push_back(Conversion("CAD", "CAD", 200));
     
-    if (!board.load_rates("./../../datasets/exchange_rates.csv"))
+    if (!board.load_rates(argv[2]))
     {
         cout << "exchange_rates.csv file was not loaded. Exiting..." << endl;
         exit(0);
     }
 
     atomic<bool> run_threads(true);
-    thread th_gen1(quote_change, std::ref(run_threads), "EUR/JPY", board.get_rate("EUR/JPY")->get_last(), 0.1);
-    thread th_gen2(quote_change, std::ref(run_threads), "EUR/USD", board.get_rate("EUR/USD")->get_last(), 0.05);
-    thread th_gen3(quote_change, std::ref(run_threads), "GBP/CAD", board.get_rate("GBP/USD")->get_last(), 0.15);
-    thread th_update(update_board, std::ref(run_threads), std::ref(board));
+    vector<thread> my_threads;
 
-    this_thread::sleep_for(chrono::seconds(15));
+    my_threads.push_back(thread(quote_change, std::ref(run_threads), "EUR/JPY", board.get_rate("EUR/JPY")->get_last(), 0.1));
+    my_threads.push_back(thread(quote_change, std::ref(run_threads), "EUR/USD", board.get_rate("EUR/USD")->get_last(), 0.05));
+    my_threads.push_back(thread(quote_change, std::ref(run_threads), "GBP/CAD", board.get_rate("GBP/USD")->get_last(), 0.15));
+    my_threads.push_back(thread(update_board, std::ref(run_threads), std::ref(board)));
 
     run_threads = false;
 
-    th_gen1.join();
-    th_gen2.join();
-    th_gen3.join();
-    th_update.join();
+    for (auto & th : my_threads)
+        th.join();
 
     for (auto &c : conversions)
     {
@@ -55,4 +59,6 @@ int main()
             cout << c.from << " -> " << c.to << " cannot be converted" << endl;
         }
     }
+
+    return 1;
 }

@@ -17,6 +17,9 @@ There are two key attributes:
 #include <mutex>
 #include "exchange_rate.hpp"
 
+/*
+
+*/
 struct Conversion
 {
     string from;
@@ -32,21 +35,54 @@ struct Conversion
         rate{0}, converted_amount{0}, cross{false} {}
 };
 
+
+/* 
+    ExchangeRateMap
+        key - currency pair name, e.g., EUR/USD, USD/JPY
+        value - pointer to ExchangeRate instance, that corresponds to the currency pair
+*/
+typedef std::unordered_map<std::string, std::shared_ptr<ExchangeRate>> ExchangeRateMap;
+
+/*
+    FromToExchangeMap: Maps from->to currency conversion relation and points to exchange rate to be used to do
+    the conversion. 
+        key1 - from currency, e.g., EUR, USD
+        key2 - to currency, e.g., USD, JPY
+        value - pointer to ExchangeRate instance that would be used to perform the conversion
+*/
+
+typedef std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<ExchangeRate>>> FromToExchangeMap;
+
+// TODO: refactor the code to use only one map
+
+typedef shared_ptr<ExchangeRate> ExchangeRatePtr;
+
 class ExchangeBoard
 {
 private:
     std::mutex m_mutex;
 
-    std::unordered_map<std::string, std::shared_ptr<ExchangeRate>> m_rates;
-    std::unordered_map<std::string, std::unordered_map<std::string, std::shared_ptr<ExchangeRate>>> m_board;
+    ExchangeRateMap m_rates;
+    FromToExchangeMap m_board;
 
 public:
     
+    // Loads exchange rates from CSV file
     bool load_rates(const string &fname);
 
+    /*
+        Performs conversion.
+
+        Returns: 
+            true - if conversion was successful; conv will be filled with conversion details
+            false - if conversion was unsuccessful
+    */
     bool convert(Conversion &conv);
 
-    shared_ptr<const ExchangeRate> get_rate(const string &ccy_pair);
+    // Returns pointer to ExchangeRate that corresponds to currency pair, e.g., EUR/USD, USD/JPY, etc.
+    ExchangeRatePtr get_rate(const string &ccy_pair);
+
+    // Updates all quotes (last, bid, ask) for a given currency pair, e.g., EUR/USD, USD/JPY, etc.
     void update_rate(const string &ccy_pair, double last);
 };
 
