@@ -5,4 +5,4 @@ value for the currency exchange rate */
 
 using namespace std;
 
-void change_rate(atomic<bool> &keep_running);
+void updateRate(atomic<bool> &keep_running, threadSafeQueue<double> &priceQueue, double lastPrice);

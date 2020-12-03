@@ -14,8 +14,9 @@ as well as starting a thread for updating the exchange rates randomly*/
 
 #include "exchangeRate.hpp"
 #include "exchangeBoard.hpp"
-#include "randomWalk.hpp"
+#include "randomPriceGen.hpp"
 #include "currencyList.hpp"
+#include "priceUpdateQueue.hpp"
 
 using namespace std;
 
@@ -24,9 +25,10 @@ string upperCase(string str);
 int main()
 {   
     atomic<bool> run_threads(true);
+    threadSafeQueue<double> priceQueue{};
     
     //Thread that randomly changes the price of exchange rates over 15 seconds
-    //thread thread1(change_rate, ref(run_threads));
+    thread priceGenThread(updateRate, ref(run_threads), &priceQueue, 1.5);
     
     ExchangeBoard exchangeBoard;
     vector<Currency> currencies;
@@ -53,6 +55,6 @@ int main()
     
     exchangeBoard.exchange(base, quote, amount);
    
-    //thread1.join();
+    priceGenThread.join();
     return 0;
 }

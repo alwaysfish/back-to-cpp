@@ -123,6 +123,33 @@ exchangeTests/fast:
 	$(MAKE) -f CMakeFiles/exchangeTests.dir/build.make CMakeFiles/exchangeTests.dir/build
 .PHONY : exchangeTests/fast
 
+exchangeTests.o: exchangeTests.cpp.o
+
+.PHONY : exchangeTests.o
+
+# target to build an object file
+exchangeTests.cpp.o:
+	$(MAKE) -f CMakeFiles/exchangeTests.dir/build.make CMakeFiles/exchangeTests.dir/exchangeTests.cpp.o
+.PHONY : exchangeTests.cpp.o
+
+exchangeTests.i: exchangeTests.cpp.i
+
+.PHONY : exchangeTests.i
+
+# target to preprocess a source file
+exchangeTests.cpp.i:
+	$(MAKE) -f CMakeFiles/exchangeTests.dir/build.make CMakeFiles/exchangeTests.dir/exchangeTests.cpp.i
+.PHONY : exchangeTests.cpp.i
+
+exchangeTests.s: exchangeTests.cpp.s
+
+.PHONY : exchangeTests.s
+
+# target to generate assembly for a file
+exchangeTests.cpp.s:
+	$(MAKE) -f CMakeFiles/exchangeTests.dir/build.make CMakeFiles/exchangeTests.dir/exchangeTests.cpp.s
+.PHONY : exchangeTests.cpp.s
+
 home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.o: home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.cpp.o
 
 .PHONY : home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.o
@@ -150,6 +177,33 @@ home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.cpp.s:
 	$(MAKE) -f CMakeFiles/exchangeTests.dir/build.make CMakeFiles/exchangeTests.dir/home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.cpp.s
 .PHONY : home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.cpp.s
 
+home/stephen/projects/back-to-cpp/sr/fx_converter/src/exchangeBoard.o: home/stephen/projects/back-to-cpp/sr/fx_converter/src/exchangeBoard.cpp.o
+
+.PHONY : home/stephen/projects/back-to-cpp/sr/fx_converter/src/exchangeBoard.o
+
+# target to build an object file
+home/stephen/projects/back-to-cpp/sr/fx_converter/src/exchangeBoard.cpp.o:
+	$(MAKE) -f CMakeFiles/exchangeTests.dir/build.make CMakeFiles/exchangeTests.dir/home/stephen/projects/back-to-cpp/sr/fx_converter/src/exchangeBoard.cpp.o
+.PHONY : home/stephen/projects/back-to-cpp/sr/fx_converter/src/exchangeBoard.cpp.o
+
+home/stephen/projects/back-to-cpp/sr/fx_converter/src/exchangeBoard.i: home/stephen/projects/back-to-cpp/sr/fx_converter/src/exchangeBoard.cpp.i
+
+.PHONY : home/stephen/projects/back-to-cpp/sr/fx_converter/src/exchangeBoard.i
+
+# target to preprocess a source file
+home/stephen/projects/back-to-cpp/sr/fx_converter/src/exchangeBoard.cpp.i:
+	$(MAKE) -f CMakeFiles/exchangeTests.dir/build.make CMakeFiles/exchangeTests.dir/home/stephen/projects/back-to-cpp/sr/fx_converter/src/exchangeBoard.cpp.i
+.PHONY : home/stephen/projects/back-to-cpp/sr/fx_converter/src/exchangeBoard.cpp.i
+
+home/stephen/projects/back-to-cpp/sr/fx_converter/src/exchangeBoard.s: home/stephen/projects/back-to-cpp/sr/fx_converter/src/exchangeBoard.cpp.s
+
+.PHONY : home/stephen/projects/back-to-cpp/sr/fx_converter/src/exchangeBoard.s
+
+# target to generate assembly for a file
+home/stephen/projects/back-to-cpp/sr/fx_converter/src/exchangeBoard.cpp.s:
+	$(MAKE) -f CMakeFiles/exchangeTests.dir/build.make CMakeFiles/exchangeTests.dir/home/stephen/projects/back-to-cpp/sr/fx_converter/src/exchangeBoard.cpp.s
+.PHONY : home/stephen/projects/back-to-cpp/sr/fx_converter/src/exchangeBoard.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -159,9 +213,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... exchangeTests"
+	@echo "... exchangeTests.o"
+	@echo "... exchangeTests.i"
+	@echo "... exchangeTests.s"
 	@echo "... home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.o"
 	@echo "... home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.i"
 	@echo "... home/stephen/projects/back-to-cpp/sr/fx_converter/src/currencyList.s"
+	@echo "... home/stephen/projects/back-to-cpp/sr/fx_converter/src/exchangeBoard.o"
+	@echo "... home/stephen/projects/back-to-cpp/sr/fx_converter/src/exchangeBoard.i"
+	@echo "... home/stephen/projects/back-to-cpp/sr/fx_converter/src/exchangeBoard.s"
 .PHONY : help
 
 

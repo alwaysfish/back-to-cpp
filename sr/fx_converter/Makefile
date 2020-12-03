@@ -231,32 +231,32 @@ src/exchangeRate.cpp.s:
 	$(MAKE) -f CMakeFiles/converter.exe.dir/build.make CMakeFiles/converter.exe.dir/src/exchangeRate.cpp.s
 .PHONY : src/exchangeRate.cpp.s
 
-src/randomWalk.o: src/randomWalk.cpp.o
+src/randomPriceGen.o: src/randomPriceGen.cpp.o
 
-.PHONY : src/randomWalk.o
+.PHONY : src/randomPriceGen.o
 
 # target to build an object file
-src/randomWalk.cpp.o:
-	$(MAKE) -f CMakeFiles/converter.exe.dir/build.make CMakeFiles/converter.exe.dir/src/randomWalk.cpp.o
-.PHONY : src/randomWalk.cpp.o
+src/randomPriceGen.cpp.o:
+	$(MAKE) -f CMakeFiles/converter.exe.dir/build.make CMakeFiles/converter.exe.dir/src/randomPriceGen.cpp.o
+.PHONY : src/randomPriceGen.cpp.o
 
-src/randomWalk.i: src/randomWalk.cpp.i
+src/randomPriceGen.i: src/randomPriceGen.cpp.i
 
-.PHONY : src/randomWalk.i
+.PHONY : src/randomPriceGen.i
 
 # target to preprocess a source file
-src/randomWalk.cpp.i:
-	$(MAKE) -f CMakeFiles/converter.exe.dir/build.make CMakeFiles/converter.exe.dir/src/randomWalk.cpp.i
-.PHONY : src/randomWalk.cpp.i
+src/randomPriceGen.cpp.i:
+	$(MAKE) -f CMakeFiles/converter.exe.dir/build.make CMakeFiles/converter.exe.dir/src/randomPriceGen.cpp.i
+.PHONY : src/randomPriceGen.cpp.i
 
-src/randomWalk.s: src/randomWalk.cpp.s
+src/randomPriceGen.s: src/randomPriceGen.cpp.s
 
-.PHONY : src/randomWalk.s
+.PHONY : src/randomPriceGen.s
 
 # target to generate assembly for a file
-src/randomWalk.cpp.s:
-	$(MAKE) -f CMakeFiles/converter.exe.dir/build.make CMakeFiles/converter.exe.dir/src/randomWalk.cpp.s
-.PHONY : src/randomWalk.cpp.s
+src/randomPriceGen.cpp.s:
+	$(MAKE) -f CMakeFiles/converter.exe.dir/build.make CMakeFiles/converter.exe.dir/src/randomPriceGen.cpp.s
+.PHONY : src/randomPriceGen.cpp.s
 
 # Help Target
 help:
@@ -279,9 +279,9 @@ help:
 	@echo "... src/exchangeRate.o"
 	@echo "... src/exchangeRate.i"
 	@echo "... src/exchangeRate.s"
-	@echo "... src/randomWalk.o"
-	@echo "... src/randomWalk.i"
-	@echo "... src/randomWalk.s"
+	@echo "... src/randomPriceGen.o"
+	@echo "... src/randomPriceGen.i"
+	@echo "... src/randomPriceGen.s"
 .PHONY : help
 
 

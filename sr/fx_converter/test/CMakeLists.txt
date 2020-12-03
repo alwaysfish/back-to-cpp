@@ -9,7 +9,9 @@ find_package(Boost COMPONENTS system filesystem unit_test_framework REQUIRED)
 
 include_directories (../include)
 
-file(GLOB SOURCES "../src/currencyList.cpp")
+file(GLOB SOURCES "../src/currencyList.cpp"
+                "../src/exchangeBoard.cpp"
+                "../test/exchangeTests.cpp")
 
 add_executable(exchangeTests ${SOURCES})
 
