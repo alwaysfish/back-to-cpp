@@ -16,7 +16,6 @@ as well as starting a thread for updating the exchange rates randomly*/
 #include "exchangeBoard.hpp"
 #include "randomPriceGen.hpp"
 #include "currencyList.hpp"
-#include "priceUpdateQueue.hpp"
 
 using namespace std;
 

@@ -12,29 +12,27 @@ class threadSafeQueue
     private:
         mutable mutex mut;
         queue<T> priceQueue;
-        condition_variable dataCond;
 
 public:
-        threadSafeQueue() {};
-        threadSafeQueue(const threadSafeQueue& other)
-        {
+        threadSafeQueue() = default;
+        threadSafeQueue(const threadSafeQueue<T> &) = delete;
+        threadSafeQueue& operator=(const threadSafeQueue<T> &) = delete;
+        threadSafeQueue(threadSafeQueue<T>&& other) {
             lock_guard<mutex> lock(mut);
-            priceQueue = other.priceQueue;
+            priceQueue = move(other.priceQueue);
         }
-        threadSafeQueue& operate=(const threadSafeQueue& other) = delete;
-        void push(T value)
+
+        void push(const T &value)
         {
             lock_guard<mutex> lock(mut);
             priceQueue.push(value);
-            dataCond.notify_one();
-
         }
         void waitAndPop(T& value)
         {
             unique_lock<mutex> lock(mut);
-            dataCond.wait(lock, [this]{return !priceQueue.empty();});
-            value = priceQueue.front();
+            T tmp = priceQueue.front();
             priceQueue.pop();
+            return tmp;
         }
         
 };

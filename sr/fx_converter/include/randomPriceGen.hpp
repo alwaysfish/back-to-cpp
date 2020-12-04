@@ -2,6 +2,7 @@
 value for the currency exchange rate */
 
 #include <atomic>
+#include "priceUpdateQueue.hpp"
 
 using namespace std;
 

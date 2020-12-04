@@ -7,7 +7,6 @@
 #include <cassert>
 
 #include "randomPriceGen.hpp"
-#include "priceUpdateQueue.hpp"
 
 using namespace std;
 
